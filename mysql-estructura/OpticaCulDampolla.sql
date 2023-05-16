@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `OpticaCulDampolla` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `OpticaCulDampolla`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: OpticaCulDampolla
 -- ------------------------------------------------------
--- Server version	8.0.33-0ubuntu0.22.04.1
+-- Server version	8.0.33-0ubuntu0.22.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -50,8 +48,10 @@ CREATE TABLE `Clients` (
   `telefon` varchar(15) DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
   `dataRegistre` varchar(45) DEFAULT NULL,
-  `idClientRecomanat` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idClient`)
+  `idClientRecomanat` int DEFAULT NULL,
+  PRIMARY KEY (`idClient`),
+  KEY `fk_Clients_1_idx` (`idClientRecomanat`),
+  CONSTRAINT `fk_Clients_1` FOREIGN KEY (`idClientRecomanat`) REFERENCES `Clients` (`idClient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,7 +61,7 @@ CREATE TABLE `Clients` (
 
 LOCK TABLES `Clients` WRITE;
 /*!40000 ALTER TABLE `Clients` DISABLE KEYS */;
-INSERT INTO `Clients` VALUES (1,'Joan Baldrich','08333','0034 68686868','joan.baldrich@gmail.com','12/05/2023 10:33','2'),(2,'Josepa Blanc','02345','003488844433','josepach@gmail.com','12/05/2023 11:00','1');
+INSERT INTO `Clients` VALUES (1,'Joan Baldrich','08333','0034 68686868','joan.baldrich@gmail.com','12/05/2023 10:33',2),(2,'Josepa Blanc','02345','003488844433','josepach@gmail.com','12/05/2023 11:00',1);
 /*!40000 ALTER TABLE `Clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,8 +176,11 @@ DROP TABLE IF EXISTS `UlleresProveidor`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `UlleresProveidor` (
   `idUlleres` int NOT NULL,
-  `idProveidor` varchar(45) NOT NULL,
-  PRIMARY KEY (`idUlleres`,`idProveidor`)
+  `idProveidor` int NOT NULL,
+  PRIMARY KEY (`idUlleres`,`idProveidor`),
+  KEY `fk_UlleresProveidor_2_idx` (`idProveidor`),
+  CONSTRAINT `fk_UlleresProveidor_1` FOREIGN KEY (`idUlleres`) REFERENCES `ulleres` (`idulleres`),
+  CONSTRAINT `fk_UlleresProveidor_2` FOREIGN KEY (`idProveidor`) REFERENCES `proveidor` (`idproveidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -187,7 +190,7 @@ CREATE TABLE `UlleresProveidor` (
 
 LOCK TABLES `UlleresProveidor` WRITE;
 /*!40000 ALTER TABLE `UlleresProveidor` DISABLE KEYS */;
-INSERT INTO `UlleresProveidor` VALUES (1,'1'),(2,'1'),(3,'2'),(4,'2'),(5,'2');
+INSERT INTO `UlleresProveidor` VALUES (1,1),(2,1),(3,2),(4,2),(5,2);
 /*!40000 ALTER TABLE `UlleresProveidor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +205,11 @@ CREATE TABLE `Vendes` (
   `idVendes` int NOT NULL,
   `idUllera` int DEFAULT NULL,
   `idEmpleada` int DEFAULT NULL,
-  PRIMARY KEY (`idVendes`)
+  PRIMARY KEY (`idVendes`),
+  KEY `fk_Vendes_1_idx` (`idUllera`),
+  KEY `fk_Vendes_2_idx` (`idEmpleada`),
+  CONSTRAINT `fk_Vendes_1` FOREIGN KEY (`idUllera`) REFERENCES `ulleres` (`idulleres`),
+  CONSTRAINT `fk_Vendes_2` FOREIGN KEY (`idEmpleada`) REFERENCES `Empleada` (`idEmpleada`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -226,7 +233,10 @@ DROP TABLE IF EXISTS `marcaUlleres`;
 CREATE TABLE `marcaUlleres` (
   `idMarca` int NOT NULL,
   `descripcio` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idMarca`)
+  `idProveidor` int DEFAULT NULL,
+  PRIMARY KEY (`idMarca`),
+  KEY `fk_marcaUlleres_1_idx` (`idProveidor`),
+  CONSTRAINT `fk_marcaUlleres_1` FOREIGN KEY (`idProveidor`) REFERENCES `proveidor` (`idproveidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -236,7 +246,7 @@ CREATE TABLE `marcaUlleres` (
 
 LOCK TABLES `marcaUlleres` WRITE;
 /*!40000 ALTER TABLE `marcaUlleres` DISABLE KEYS */;
-INSERT INTO `marcaUlleres` VALUES (1,'Raybam'),(2,'Onil'),(3,'MGrafic');
+INSERT INTO `marcaUlleres` VALUES (1,'Raybam',NULL),(2,'Onil',NULL),(3,'MGrafic',NULL);
 /*!40000 ALTER TABLE `marcaUlleres` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +300,11 @@ CREATE TABLE `ulleres` (
   `colormontura` varchar(45) DEFAULT NULL,
   `colorvidre` varchar(45) DEFAULT NULL,
   `preu` double DEFAULT NULL,
-  PRIMARY KEY (`idulleres`)
+  PRIMARY KEY (`idulleres`),
+  KEY `fk_ulleres_1_idx` (`idMarca`),
+  KEY `fk_ulleres_2_idx` (`idTipus`),
+  CONSTRAINT `fk_ulleres_1` FOREIGN KEY (`idMarca`) REFERENCES `marcaUlleres` (`idMarca`),
+  CONSTRAINT `fk_ulleres_2` FOREIGN KEY (`idTipus`) REFERENCES `TipusUlleres` (`idTipusUlleres`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -385,4 +399,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-11 15:29:59
+-- Dump completed on 2023-05-16  7:57:22

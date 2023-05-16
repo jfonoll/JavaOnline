@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: Pizzeria
 -- ------------------------------------------------------
--- Server version	8.0.33-0ubuntu0.22.04.1
+-- Server version	8.0.33-0ubuntu0.22.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -111,7 +111,6 @@ CREATE TABLE `Comanda` (
   `dataComanda` datetime DEFAULT NULL,
   `idBotiga` int DEFAULT NULL,
   `idtipusRepartiment` int DEFAULT NULL,
-  `quantitatProductes` int DEFAULT NULL,
   `preuTotal` double DEFAULT NULL,
   PRIMARY KEY (`idComanda`),
   KEY `fk_Comanda_1_idx` (`idtipusRepartiment`),
@@ -128,6 +127,33 @@ CREATE TABLE `Comanda` (
 LOCK TABLES `Comanda` WRITE;
 /*!40000 ALTER TABLE `Comanda` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Comanda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Detall_comanda`
+--
+
+DROP TABLE IF EXISTS `Detall_comanda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Detall_comanda` (
+  `idComanda` int NOT NULL,
+  `idProducte` int DEFAULT NULL,
+  `quantitat` int DEFAULT NULL,
+  PRIMARY KEY (`idComanda`),
+  KEY `fk_Detall_comanda_2_idx` (`idProducte`),
+  CONSTRAINT `fk_Detall_comanda_1` FOREIGN KEY (`idComanda`) REFERENCES `Comanda` (`idComanda`),
+  CONSTRAINT `fk_Detall_comanda_2` FOREIGN KEY (`idProducte`) REFERENCES `Producte` (`idProducte`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Detall_comanda`
+--
+
+LOCK TABLES `Detall_comanda` WRITE;
+/*!40000 ALTER TABLE `Detall_comanda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Detall_comanda` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -349,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-11 17:34:51
+-- Dump completed on 2023-05-16  7:55:08
