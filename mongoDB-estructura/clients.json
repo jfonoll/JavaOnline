@@ -1,0 +1,23 @@
+[{
+  "_id": {
+    "$oid": "647f40c8adf021d821deb2b9"
+  },
+  "nom": "Joana",
+  "adrecaPostal": "09888",
+  "telefon": "678564722",
+  "mail": "joana333@gmail.com",
+  "dataRegistre": "21/02/2021",
+  "clientRecomanat": "647f43d3adf021d821deb2bf",
+  "empleatVenedor": "647f44b8adf021d821deb2c7"
+},{
+  "_id": {
+    "$oid": "647f43d3adf021d821deb2bf"
+  },
+  "nom": "Josep Cruilles",
+  "adrecaPostal": "99999",
+  "telefon": "684555333",
+  "mail": "josepcruilles@gmail.com",
+  "dataRegistre": "06/06/2015",
+  "clientRecomanat": "",
+  "empleatVenedor": "647f44b8adf021d821deb2c7"
+}]

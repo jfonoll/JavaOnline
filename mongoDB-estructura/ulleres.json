@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "647f3f6badf021d821deb2b1"
+  },
+  "marca": "Reyban",
+  "graducacio": "0.0",
+  "preu": "102",
+  "colorMuntura": "negre",
+  "colorVidre": "negre",
+  "idProveidor": "64678f75fd1d3012f31aba22",
+  "tipusMuntura": [
+    "flotant",
+    "pasta",
+    "metalica"
+  ]
+}]

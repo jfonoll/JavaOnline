@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "64678f75fd1d3012f31aba22"
+  },
+  "nom": "Optica Pep",
+  "telefon": "609594939",
+  "Fax": "934434546",
+  "adreca": {
+    "carrer": "Rambla nova",
+    "numero": "12",
+    "pis": "1",
+    "porta": "2",
+    "ciutat": "Barcelona",
+    "codi_postal": "08009",
+    "pais": "Espanya"
+  },
+  "nif": "144414445K"
+}]
